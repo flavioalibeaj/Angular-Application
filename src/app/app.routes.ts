@@ -12,8 +12,15 @@ export const routes: Routes = [
     loadChildren: () => import('./home/home.routes').then((r) => r.routes),
   },
   {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./not-found/not-found.component').then(
+        (c) => c.NotFoundComponent
+      ),
+  },
+  {
     path: '**',
-    redirectTo: 'auth',
+    redirectTo: 'not-found',
     pathMatch: 'full',
   },
 ];
