@@ -1,1 +1,29 @@
-<p>layout works!</p>
+<mat-toolbar>
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button>
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="over" position="start" role="navigation" [autoFocus]="false">
+    <mat-nav-list>
+      @for (nav of sideNavigation; track nav; let last = $last) {
+      <a mat-list-item [routerLink]="nav.path">{{nav.title}}</a>
+      @if (!last) {
+      <mat-divider></mat-divider>
+      }
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

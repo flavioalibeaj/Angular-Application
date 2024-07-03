@@ -1,4 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+// html,
+// body {
+//   height: 100%;
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+// }
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2; /* Ensure toolbar stays on top */
+}
+
+.example-container {
+  // width: 100vw;
+  width: 100%; /* Ensure full width of the viewport */
+  height: calc(100vh - 64px); /* Adjust height to subtract the toolbar height */
+  //   height: 100vh; /* Ensure full height of the viewport */
+  box-sizing: border-box;
+  overflow: hidden;
+  // overflow: hidden;
+  margin-top: 64px; /* Adjust margin to account for toolbar height */
+  border: 5px dotted red;
+}
+
+mat-sidenav-content {
+  // height: 100%;
+  // overflow: auto; /* Enable scrolling for the content area if needed */
+}
