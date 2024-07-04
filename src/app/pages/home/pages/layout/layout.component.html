@@ -5,10 +5,10 @@
   <span>My App</span>
   <span class="example-spacer"></span>
   <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
+    <mat-icon [matBadge]="notifications.length" [matBadgeHidden]="!notifications.length">notifications</mat-icon>
   </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
   </button>
 </mat-toolbar>
 
@@ -17,6 +17,7 @@
     <mat-nav-list>
       @for (nav of sideNavigation; track nav; let last = $last) {
       <a mat-list-item [routerLink]="nav.path">{{nav.title}}</a>
+      <!-- TODO style active routes -->
       @if (!last) {
       <mat-divider></mat-divider>
       }
@@ -27,3 +28,16 @@
     <router-outlet />
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>person</mat-icon>
+    <!-- TODO check user account -->
+    Profile
+  </button>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <!-- TODO logout -->
+    Log out
+  </button>
+</mat-menu>
