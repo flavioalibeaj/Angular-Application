@@ -1,0 +1,24 @@
+<mat-card appearance="outlined">
+  <mat-card-header class="primary_state">
+    <mat-card-title>
+      <mat-icon>{{dialogData.cardTitleIcon}}</mat-icon>
+      {{dialogData.cardTitle}}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{dialogData.cardText}}</p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions align="end">
+    @if (!dialogData.hideSaveButton) {
+    <button mat-raised-button>
+      <mat-icon>{{dialogData.saveButtonIcon ?? 'check'}}</mat-icon>
+      {{dialogData.saveButtonText ?? 'Save'}}
+    </button>
+    }
+    <button mat-stroked-button>
+      <mat-icon>{{dialogData.cancelButtonIcon ?? 'close'}}</mat-icon>
+      {{dialogData.cancelButtonText ?? 'Close'}}
+    </button>
+  </mat-card-actions>
+</mat-card>
