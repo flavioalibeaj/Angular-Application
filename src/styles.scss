@@ -28,7 +28,21 @@ body {
 //   overflow: hidden;
 // }
 
-.primary_state {
+.primary-state {
   color: white;
-  background-color: #039BE5;
+  background-color: #0288D1;
+}
+
+.accent-state {
+  color: white;
+  background-color: #d10289;
+}
+
+.info-state {
+  color: white;
+  background-color: #02d1b2;
+}
+.warn-state {
+  color: white;
+  background-color: #b83d00;
 }
