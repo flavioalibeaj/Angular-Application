@@ -1,16 +1,29 @@
-import { Injectable, inject } from '@angular/core';
+import {
+  Injectable,
+  Signal,
+  WritableSignal,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly _router: Router = inject(Router);
+  public token: WritableSignal<string> = signal<string>(
+    localStorage.getItem('token') ?? ''
+  );
 
-  logout(): Observable<null> {
-    this._router.navigate(['auth']);
+  public readonly isAuthenticated: Signal<boolean> = computed(() => {
+    console.log('tok', this.token());
+    return !!this.token();
+  }); //TODO decrypt token and check exp date
+
+  logout() {
     localStorage.clear();
-    return of(null);
+    this._router.navigate(['auth']);
   }
 }

@@ -11,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { InformationDialogComponent } from '../../../../shared/components/information-dialog/information-dialog.component';
 import { IInformationDialogData } from '../../../../shared/model/i-information-dialog-data';
-import { EMPTY, switchMap } from 'rxjs';
+import { EMPTY, of, switchMap } from 'rxjs';
 import { IDialogResponse } from '../../../../shared/model/i-dialog-response';
 import { AuthService } from '../../../../core/services/auth.service';
 
@@ -61,7 +61,7 @@ export class LayoutComponent {
       .afterClosed()
       .pipe(
         switchMap((dialogData: IDialogResponse) =>
-          dialogData.submitted ? this._authService.logout() : EMPTY
+          dialogData.submitted ? of(this._authService.logout()) : EMPTY
         )
       )
       .subscribe();
