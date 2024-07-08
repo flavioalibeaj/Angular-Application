@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InformationDialogComponent } from '../../../../shared/components/information-dialog/information-dialog.component';
 import { IInformationDialogData } from '../../../../shared/model/i-information-dialog-data';
 import { EMPTY, switchMap } from 'rxjs';
-import { DialogResponse } from '../../../../shared/model/dialog-response';
+import { IDialogResponse } from '../../../../shared/model/i-dialog-response';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
@@ -60,7 +60,7 @@ export class LayoutComponent {
       })
       .afterClosed()
       .pipe(
-        switchMap((dialogData: DialogResponse) =>
+        switchMap((dialogData: IDialogResponse) =>
           dialogData.submitted ? this._authService.logout() : EMPTY
         )
       )
