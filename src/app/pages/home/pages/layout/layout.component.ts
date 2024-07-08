@@ -11,6 +11,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { InformationDialogComponent } from '../../../../shared/components/information-dialog/information-dialog.component';
 import { IInformationDialogData } from '../../../../shared/model/i-information-dialog-data';
+import { EMPTY, switchMap } from 'rxjs';
+import { DialogResponse } from '../../../../shared/model/dialog-response';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -37,7 +40,10 @@ export class LayoutComponent {
     { path: 'auth', title: 'Auth' },
   ];
 
-  constructor(private readonly _matDialog: MatDialog) {}
+  constructor(
+    private readonly _matDialog: MatDialog,
+    private readonly _authService: AuthService
+  ) {}
 
   logout() {
     const data: IInformationDialogData = {
@@ -47,10 +53,17 @@ export class LayoutComponent {
       saveButtonText: 'Log out',
     };
 
-    this._matDialog.open(InformationDialogComponent, {
-      width: '400px',
-      data,
-      // autoFocus: false
-    });
+    this._matDialog
+      .open(InformationDialogComponent, {
+        width: '400px',
+        data,
+      })
+      .afterClosed()
+      .pipe(
+        switchMap((dialogData: DialogResponse) =>
+          dialogData.submitted ? this._authService.logout() : EMPTY
+        )
+      )
+      .subscribe();
   }
 }
