@@ -35,7 +35,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class LayoutComponent {
   notifications = []; // TODO websocket notifications
   readonly sideNavigation: ISideNavigation[] = [
-    { path: '', title: 'Home' },
+    { path: 'home', title: 'Home' },
     { path: 'not-found', title: 'Not Found' },
     { path: 'auth', title: 'Auth' },
   ];

@@ -43,7 +43,7 @@ export class LoginComponent {
         tap((response) => {
           if (response.token) {
             this._authService.token = response.token;
-            this._router.navigate(['']);
+            this._router.navigate(['home']);
           }
         })
       )

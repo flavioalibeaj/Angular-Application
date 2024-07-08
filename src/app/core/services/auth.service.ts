@@ -24,15 +24,16 @@ export class AuthService {
     localStorage.setItem('token', newToken);
   }
 
-  public readonly isAuthenticated: Signal<boolean> = computed(() => {
-    return !!this._token();
-  }); //TODO decrypt token and check exp date
+  public readonly isAuthenticated: Signal<boolean> = computed(
+    () => !!this._token()
+  ); //TODO decrypt token and check exp date
 
   public login<T>(body: T): Observable<{ token: string }> {
     return this._httpService.post<T, { token: string }>('auth/login', body);
   }
 
   public logout() {
+    this._token.set('');
     localStorage.clear();
     this._router.navigate(['auth']);
   }
