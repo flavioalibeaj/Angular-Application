@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html,
 body {
@@ -27,5 +30,5 @@ body {
 
 .primary_state {
   color: white;
-  background-color: blue;
+  background-color: #039BE5;
 }
