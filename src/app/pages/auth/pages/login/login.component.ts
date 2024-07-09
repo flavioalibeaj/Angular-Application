@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../../../../core/services/auth.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -35,8 +36,12 @@ export class LoginComponent {
   });
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _router: Router = inject(Router);
+  private readonly _ngxSpinnerService: NgxSpinnerService =
+    inject(NgxSpinnerService);
 
   onSubmit() {
+    this._ngxSpinnerService.show();
+
     this._authService
       .login(this.formGroup.getRawValue())
       .pipe(
@@ -47,6 +52,8 @@ export class LoginComponent {
           }
         })
       )
-      .subscribe();
+      .subscribe({
+        complete: () => this._ngxSpinnerService.hide(),
+      });
   }
 }
