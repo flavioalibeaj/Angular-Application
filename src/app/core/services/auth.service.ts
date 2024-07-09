@@ -19,6 +19,9 @@ export class AuthService {
   );
   private readonly _router: Router = inject(Router);
   private readonly _httpService: HttpService = inject(HttpService);
+  public get token(): string {
+    return this._token();
+  }
   public set token(newToken: string) {
     this._token.set(newToken);
     localStorage.setItem('token', newToken);
