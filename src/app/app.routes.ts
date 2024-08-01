@@ -1,12 +1,14 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 import { appGuard } from './core/guards/app.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'auth',
-    canActivate: [authGuard],
+    canActivate: [appGuard],
+    data: {
+      openWhenAuthenticated: false,
+    },
     loadChildren: () =>
       import('./pages/auth/auth.routes').then((r) => r.routes),
   },
@@ -14,6 +16,9 @@ export const routes: Routes = [
     // TODO guard with can activate child
     path: 'home',
     canActivate: [appGuard],
+    data: {
+      openWhenAuthenticated: true,
+    },
     loadChildren: () =>
       import('./pages/home/home.routes').then((r) => r.routes),
   },
