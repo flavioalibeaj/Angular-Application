@@ -1,4 +1,4 @@
-export interface IDialogResponse<T = null> {
+export interface IDialogResponse<T = unknown> {
   submitted?: boolean;
   formData?: T;
 }
