@@ -1,19 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../../../../core/services/auth.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GenericFormComponent } from '../../../../shared/components/generic-form/generic-form.component';
+import { IFormModel } from '../../../../shared/model/i-form-model';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -24,26 +21,51 @@ import { NgxSpinnerService } from 'ngx-spinner';
     MatIconModule,
     ReactiveFormsModule,
     MatDividerModule,
+    GenericFormComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  template: `
+    <app-generic-form
+      [formModelInput]="formModel"
+      [cardViewInput]="true"
+      [hideCancelInput]="true"
+      [submitIconInput]="'login'"
+      [submitTextInput]="'Log in'"
+      [formClassInput]="'w-96 flex flex-col items-center'"
+      (formSubmit)="onFormSubmit($event)"
+    />
+  `,
 })
 export class LoginComponent {
-  public hide = true;
-  public readonly formGroup: FormGroup = new FormGroup({
-    username: new FormControl<string>('mor_2314', Validators.required),
-    password: new FormControl<string>('83r5^_', Validators.required),
-  });
-  private readonly _authService: AuthService = inject(AuthService);
-  private readonly _router: Router = inject(Router);
-  private readonly _ngxSpinnerService: NgxSpinnerService =
-    inject(NgxSpinnerService);
+  readonly formModel: IFormModel[] = [
+    {
+      fieldType: 'text',
+      fieldName: 'username',
+      label: 'Username',
+      fieldValue: 'mor_2314',
+      inputClass: 'w-full',
+      validators: [Validators.required],
+    },
+    {
+      fieldType: 'password',
+      fieldName: 'password',
+      label: 'Password',
+      fieldValue: '83r5^_',
+      inputClass: 'w-full',
+      validators: [Validators.required],
+    },
+  ];
 
-  onSubmit() {
+  constructor(
+    private readonly _authService: AuthService,
+    private readonly _router: Router,
+    private readonly _ngxSpinnerService: NgxSpinnerService
+  ) {}
+
+  onFormSubmit(event: { submitted: boolean; formData: unknown }) {
     this._ngxSpinnerService.show();
 
     this._authService
-      .login(this.formGroup.getRawValue())
+      .login(event.formData)
       .pipe(
         tap((response) => {
           if (response.token) {
