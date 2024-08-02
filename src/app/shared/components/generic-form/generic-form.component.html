@@ -1,0 +1,51 @@
+@if(cardViewInput){
+<div class="h-full flex justify-center items-center">
+    <mat-card>
+        <form [formGroup]="formGroup" [class]="formClassInput" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                @for (input of formModelInput; track input) {
+                @switch (input.fieldType) {
+                @case ('text') {
+                <mat-form-field [class]="input.inputClass">
+                    <mat-label> {{input.label}} </mat-label>
+                    <input matInput type="text" [formControlName]="input.fieldName" />
+                </mat-form-field>
+                }
+                @case ('number') {
+                <mat-form-field [class]="input.inputClass">
+                    <mat-label> {{input.label}} </mat-label>
+                    <input matInput type="number" [formControlName]="input.fieldName" />
+                </mat-form-field>
+                }
+                @case ('password') {
+                <mat-form-field [class]="input.inputClass">
+                    <mat-label> {{input.label}} </mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [formControlName]="input.fieldName">
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                }
+                }
+                }
+            </mat-card-content>
+            <mat-divider class="w-5/6"></mat-divider>
+            <mat-card-actions class="mt-2 w-full flex gap-3 justify-end">
+                @if (!hideCancelInput) {
+                <button mat-raised-button [disabled]="!formGroup.valid">
+                    <mat-icon>close</mat-icon>
+                    Close
+                </button>
+                }
+                @if (!hideSubmitInput) {
+                <button mat-raised-button type="submit" [disabled]="!formGroup.valid">
+                    <mat-icon> {{submitIconInput}} </mat-icon>
+                    {{submitTextInput}}
+                </button>
+                }
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
+}
